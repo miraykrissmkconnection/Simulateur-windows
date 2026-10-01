@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Exercice – Éteindre Windows 11</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:24px;font-family:"Segoe UI",Arial,sans-serif;background:#f5f6f8;color:#202020}
+.wrap{max-width:1000px;margin:auto}
+.top{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:14px}
+h1{font-size:21px;margin:0}.mission{font-size:16px}
+.reset{border:1px solid #bbb;background:white;border-radius:8px;padding:10px 16px;font-size:15px;cursor:pointer}
+.monitor{border:4px solid #333;border-radius:8px;overflow:hidden;background:#000}
+.desktop{height:560px;position:relative;overflow:hidden;background:
+radial-gradient(ellipse at 62% 35%,rgba(120,200,255,.95) 0 9%,rgba(45,120,215,.82) 28%,transparent 50%),
+linear-gradient(135deg,#1473e6,#142c8e 58%,#0b174e)}
+.recycle{position:absolute;left:22px;top:20px;color:white;text-align:center;font-size:13px;text-shadow:0 1px 2px #333}
+.recycle .ico{font-size:38px}
+.taskbar{position:absolute;bottom:0;left:0;right:0;height:62px;background:#f3f6f9;display:flex;align-items:center;border-top:1px solid white;box-shadow:0 -1px 5px #0002}
+.apps{display:flex;align-items:center;gap:2px;margin:auto}
+.tb{width:52px;height:50px;border:0;background:transparent;border-radius:5px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:28px}
+.tb:hover{background:#e3e8ed}
+.win{display:grid;grid-template-columns:repeat(2,12px);gap:2px}
+.win i{display:block;width:12px;height:12px;background:#2499e8}
+.search{width:27px;height:27px;position:relative}
+.search:before{content:"";position:absolute;width:16px;height:16px;border:3px solid #333;border-radius:50%;left:1px;top:1px}
+.search:after{content:"";position:absolute;width:11px;height:3px;background:#333;transform:rotate(45deg);right:1px;bottom:4px;border-radius:3px}
+.tray{position:absolute;right:14px;display:flex;align-items:center;gap:9px;font-size:12px}
+.clock{text-align:right}
+.startmenu{display:none;position:absolute;z-index:10;bottom:72px;left:50%;transform:translateX(-50%);width:min(510px,94%);background:#f7f8fa;color:#202020;border-radius:10px;box-shadow:0 10px 32px #0005;padding:24px 28px 0}
+.searchbox{height:42px;border:1px solid #bbb;border-bottom:2px solid #1473e6;border-radius:5px;background:white;display:flex;align-items:center;padding:0 12px;color:#666;font-size:14px}
+.pinned{display:flex;justify-content:space-between;margin:23px 0 13px;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:15px 8px}
+.app{border:0;background:transparent;padding:8px 3px;border-radius:6px;font-size:12px;cursor:default}
+.app span{display:block;font-size:29px;margin-bottom:4px}
+.bottom{margin:24px -28px 0;height:72px;padding:0 30px;background:#eef1f5;border-top:1px solid #d5d5d5;border-radius:0 0 10px 10px;display:flex;align-items:center;justify-content:space-between}
+.user{display:flex;align-items:center;gap:10px;font-size:14px}.avatar{width:36px;height:36px;border-radius:50%;background:#d5d9de;display:flex;align-items:center;justify-content:center}
+.power{width:48px;height:48px;border:0;background:transparent;border-radius:6px;font-size:30px;cursor:pointer}.power:hover{background:#dde2e7}
+.powermenu{display:none;position:absolute;z-index:20;right:18px;bottom:68px;width:240px;background:#fff!important;color:#202020!important;border:1px solid #c8c8c8;border-radius:8px;box-shadow:0 8px 24px #0004;padding:6px}
+.powermenu button{width:100%;height:54px;border:0;background:#fff!important;color:#202020!important;border-radius:5px;text-align:left;padding:0 15px;font-size:16px;cursor:pointer}
+.powermenu button:hover{background:#e9ecef!important}.picon{display:inline-block;width:38px;font-size:24px;vertical-align:middle}
+.state{height:560px;display:none;align-items:center;justify-content:center;text-align:center;color:white}.closing{background:#0067b8}.off{background:#000}
+.feedback{margin-top:13px;padding:12px 14px;border:1px solid #ccc;border-radius:8px;background:#fff;font-size:14px}
+@media(max-width:650px){body{padding:10px}.desktop,.state{height:460px}.grid{grid-template-columns:repeat(3,1fr)}.tray{display:none}.tb{width:44px}.startmenu{bottom:68px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top"><div><h1>Exercice pratique</h1><div class="mission">🎯 Éteignez correctement l’ordinateur.</div></div><button class="reset" id="reset">↻ Recommencer</button></div>
+<div class="monitor">
+<div class="desktop" id="desktop">
+<div class="recycle"><div class="ico">🗑️</div>Corbeille</div>
+<div class="startmenu" id="startmenu">
+<div class="searchbox">⌕ &nbsp; Tapez ici pour effectuer une recherche</div>
+<div class="pinned"><b>Épinglé</b><span>Toutes les applications &gt;</span></div>
+<div class="grid">
+<div class="app"><span>🌐</span>Edge</div><div class="app"><span>📁</span>Explorateur</div><div class="app"><span>⚙️</span>Paramètres</div><div class="app"><span>🛍️</span>Store</div><div class="app"><span>🖼️</span>Photos</div><div class="app"><span>🧮</span>Calculatrice</div>
+</div>
+<div class="bottom"><div class="user"><span class="avatar">👤</span>Utilisateur</div><button class="power" id="power" title="Marche/Arrêt">⏻</button></div>
+<div class="powermenu" id="powermenu">
+<button><span class="picon">☾</span>Mettre en veille</button>
+<button id="shutdown"><span class="picon">⏻</span>Arrêter</button>
+<button id="restart"><span class="picon">↻</span>Redémarrer</button>
+</div>
+</div>
+<div class="taskbar">
+<div class="apps">
+<button class="tb" id="start" title="Démarrer"><span class="win"><i></i><i></i><i></i><i></i></span></button>
+<button class="tb" title="Rechercher"><span class="search"></span></button>
+<button class="tb" title="Vue des tâches">▣</button>
+<button class="tb" title="Conversation">🟣</button>
+<button class="tb" title="Explorateur">📁</button>
+<button class="tb" title="Microsoft Edge">🌐</button>
+<button class="tb" title="Microsoft Store">🛍️</button>
+</div>
+<div class="tray"><span>⌃</span><span>▰</span><span>🔊</span><span class="clock" id="clock"></span></div>
+</div>
+</div>
+<div class="state closing" id="closing"><div><div style="font-size:50px;margin-bottom:18px">⊞</div><div style="font-size:21px">Arrêt en cours</div><div style="margin-top:8px">Veuillez patienter</div></div></div>
+<div class="state off" id="off"><div><div style="font-size:35px">✓</div><div style="font-size:21px;margin-top:12px">Ordinateur éteint</div><div style="color:#aaa;margin-top:8px">Exercice réussi</div></div></div>
+</div>
+<div class="feedback" id="feedback">Trouvez comment éteindre l’ordinateur.</div>
+</div>
+<script>
+const start=document.getElementById('start'),sm=document.getElementById('startmenu'),power=document.getElementById('power'),pm=document.getElementById('powermenu'),shutdown=document.getElementById('shutdown'),restart=document.getElementById('restart'),desktop=document.getElementById('desktop'),closing=document.getElementById('closing'),off=document.getElementById('off'),feedback=document.getElementById('feedback');
+start.onclick=()=>{sm.style.display=sm.style.display==='block'?'none':'block';pm.style.display='none'};
+power.onclick=()=>{pm.style.display=pm.style.display==='block'?'none':'block'};
+restart.onclick=()=>feedback.textContent='Ce bouton redémarre l’ordinateur. Cherchez l’option pour l’éteindre.';
+shutdown.onclick=()=>{sm.style.display='none';pm.style.display='none';desktop.style.display='none';closing.style.display='flex';feedback.textContent='Windows est en cours d’arrêt…';setTimeout(()=>{closing.style.display='none';off.style.display='flex';feedback.textContent='🎉 Réussi : Démarrer → Marche/Arrêt → Arrêter.'},1500)};
+document.getElementById('reset').onclick=()=>{off.style.display='none';closing.style.display='none';desktop.style.display='block';sm.style.display='none';pm.style.display='none';feedback.textContent='Trouvez comment éteindre l’ordinateur.'};
+function tick(){let d=new Date();document.getElementById('clock').innerHTML=d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})+'<br>'+d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'})}tick();setInterval(tick,30000);
+</script>
+</body></html>
